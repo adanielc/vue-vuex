@@ -1,5 +1,15 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <user-auth />
 </template>
+
+<script>
+import UserAuth from "../components/UserAuth";
+
+export default {
+  name: "User",
+
+  components: {
+    UserAuth,
+  },
+};
+</script>
