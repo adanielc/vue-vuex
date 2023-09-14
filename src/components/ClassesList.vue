@@ -1,19 +1,21 @@
 <template>
   <v-container>
-    <v-row v-for="item in classes" :key="item.index">
-      <v-card
-        @click="getClass(item.url)"
-        elevation="2"
-        class="mx-auto my-12"
-        width="374"
-      >
-        <v-card-title class="mx-auto my-12">
-          {{ item.name }}
-        </v-card-title>
-        <v-card-text>
-          <v-row> </v-row>
-        </v-card-text>
-      </v-card>
+    <v-row>
+      <v-col v-for="item in classes" :key="item.index">
+        <v-card
+          @click="getClass(item.url)"
+          elevation="2"
+          class="mx-auto my-6"
+          width="374"
+        >
+          <v-card-title>
+            {{ item.name }}
+          </v-card-title>
+          <v-card-text>
+            <v-row> </v-row>
+          </v-card-text>
+        </v-card>
+      </v-col>
     </v-row>
     <v-row>
       <v-btn @click="get">Get</v-btn>
