@@ -8,6 +8,7 @@ export default new Vuex.Store({
     return {
       counter: 13,
       isLoggedIn: false,
+      responseData: null,
     };
   },
   getters: {
@@ -40,6 +41,9 @@ export default new Vuex.Store({
     setAuth(state, payload) {
       state.isLoggedIn = payload.isAuth;
     },
+    setResponseData(state, data) {
+      state.responseData = data;
+    },
   },
   actions: {
     increment(context, payload) {
@@ -50,6 +54,42 @@ export default new Vuex.Store({
     },
     logout(context, payload) {
       context.commit("setAuth", { isAuth: false });
+    },
+    async fetchData({ commit }, { url, params }) {
+      try {
+        const response = await axios.get(url, { params });
+        commit('setResponseData', response.data);
+        return response.data;
+      } catch (error) {
+        throw error;
+      }
+    },
+    async postData({ commit }, { url, data }) {
+      try {
+        const response = await axios.post(url, data);
+        commit('setResponseData', response.data);
+        return response.data;
+      } catch (error) {
+        throw error;
+      }
+    },
+    async putData({ commit }, { url, data }) {
+      try {
+        const response = await axios.put(url, data);
+        commit('setResponseData', response.data);
+        return response.data;
+      } catch (error) {
+        throw error;
+      }
+    },
+    async deleteData({ commit }, { url }) {
+      try {
+        const response = await axios.delete(url);
+        commit('setResponseData', response.data);
+        return response.data;
+      } catch (error) {
+        throw error;
+      }
     },
   },
   modules: {},
