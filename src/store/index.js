@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import axios from "axios";
 
 Vue.use(Vuex);
 
@@ -57,8 +58,11 @@ export default new Vuex.Store({
     },
     async fetchData({ commit }, { url, params }) {
       try {
+        console.log("fetchData");
         const response = await axios.get(url, { params });
-        commit('setResponseData', response.data);
+        console.log("response: " + response.data);
+        commit("setResponseData", response.data);
+
         return response.data;
       } catch (error) {
         throw error;
@@ -67,7 +71,7 @@ export default new Vuex.Store({
     async postData({ commit }, { url, data }) {
       try {
         const response = await axios.post(url, data);
-        commit('setResponseData', response.data);
+        commit("setResponseData", response.data);
         return response.data;
       } catch (error) {
         throw error;
@@ -76,7 +80,7 @@ export default new Vuex.Store({
     async putData({ commit }, { url, data }) {
       try {
         const response = await axios.put(url, data);
-        commit('setResponseData', response.data);
+        commit("setResponseData", response.data);
         return response.data;
       } catch (error) {
         throw error;
@@ -85,7 +89,7 @@ export default new Vuex.Store({
     async deleteData({ commit }, { url }) {
       try {
         const response = await axios.delete(url);
-        commit('setResponseData', response.data);
+        commit("setResponseData", response.data);
         return response.data;
       } catch (error) {
         throw error;

@@ -11,6 +11,7 @@
           <v-card-title>
             {{ item.name }}
           </v-card-title>
+          <img :src="item.image" alt="" />
           <v-card-text>
             <v-row> </v-row>
           </v-card-text>
@@ -18,14 +19,14 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-btn @click="get">Get</v-btn>
+      <v-btn @click="fetchDataFromApi">Get</v-btn>
     </v-row>
   </v-container>
 </template>
 
 <script>
 import axios from "axios";
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "ClassesList",
@@ -35,18 +36,17 @@ export default {
     classes: [],
   }),
   computed: {
-    ...mapState(['responseData']),
-
+    ...mapState(["responseData", "counter"]),
   },
   methods: {
-    ...mapActions(['fetchData', 'postData', 'putData', 'deleteData']),
+    ...mapActions(["fetchData", "postData", "putData", "deleteData"]),
     get() {
       axios({
         method: "get",
-        url: "https://www.dnd5eapi.co/api/classes ",
+        url: "https://hp-api.onrender.com/api/characters",
       }).then((response) => {
-        console.log("response result: " + response.data.results);
-        this.classes = response.data.results;
+        console.log("response result: " + response.data);
+        this.classes = response.data;
         // this.classes = response.data.results.map((e) => e);
       });
     },
@@ -62,19 +62,28 @@ export default {
       });
     },
     async fetchDataFromApi() {
-      const url = "https://www.dnd5eapi.co/api/classes";
-      const params = { /* Tus parámetros GET aquí */ };
+      console.log("call");
+      console.log(this.counter);
+      const url = "https://hp-api.onrender.com/api/characters";
+      const params = {
+        /* Tus parámetros GET aquí */
+      };
       try {
+        console.log("try");
         const response = await this.fetchData({ url, params });
-        this.classes = response.results;
+        console.log("response" + response);
+        console.log(this.responseData);
+        this.classes = this.responseData;
         // Manejar la respuesta
       } catch (error) {
         // Manejar el error
       }
     },
     async postDataToApi() {
-      const url = 'URL_POST_AQUI';
-      const data = { /* Tus datos POST aquí */ };
+      const url = "URL_POST_AQUI";
+      const data = {
+        /* Tus datos POST aquí */
+      };
       try {
         const response = await this.postData({ url, data });
         // Manejar la respuesta
@@ -83,8 +92,10 @@ export default {
       }
     },
     async putDataToApi() {
-      const url = 'URL_PUT_AQUI';
-      const data = { /* Tus datos PUT aquí */ };
+      const url = "URL_PUT_AQUI";
+      const data = {
+        /* Tus datos PUT aquí */
+      };
       try {
         const response = await this.putData({ url, data });
         // Manejar la respuesta
@@ -93,7 +104,7 @@ export default {
       }
     },
     async deleteDataFromApi() {
-      const url = 'URL_DELETE_AQUI';
+      const url = "URL_DELETE_AQUI";
       try {
         const response = await this.deleteData({ url });
         // Manejar la respuesta
